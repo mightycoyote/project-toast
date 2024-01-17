@@ -1,17 +1,22 @@
-import React from 'react';
+import React from "react";
 
-import Toast from '../Toast';
-import styles from './ToastShelf.module.css';
+import Toast from "../Toast";
+import styles from "./ToastShelf.module.css";
 
-function ToastShelf() {
+function ToastShelf({ toasts, setToasts }) {
+  function dismissToast(key) {
+    // I had this solution noted from an older JS course, not sure if it is still The Way to do this
+    const toastIndex = toasts.findIndex(toast => toast.key === key);
+    const newToastsList = [...toasts.slice(0, toastIndex), ...toasts.slice(toastIndex + 1)];
+    setToasts(newToastsList);
+  }
   return (
     <ol className={styles.wrapper}>
-      <li className={styles.toastWrapper}>
-        <Toast variant="notice">Example notice toast</Toast>
-      </li>
-      <li className={styles.toastWrapper}>
-        <Toast variant="error">Example error toast</Toast>
-      </li>
+      {toasts.map((toast) => (
+        <li className={styles.toastWrapper}>
+          <Toast variant={toast.selectedVariant} message={toast.message} dismissToast={dismissToast} key={Math.random()} />
+        </li>
+      ))}
     </ol>
   );
 }

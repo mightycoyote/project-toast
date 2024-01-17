@@ -1,16 +1,24 @@
 import React from "react";
 
 import Button from "../Button";
-import Toast from "../Toast";
+// import Toast from "../Toast";
 
 import styles from "./ToastPlayground.module.css";
+import ToastShelf from "../ToastShelf/ToastShelf";
 
 const VARIANT_OPTIONS = ["notice", "warning", "success", "error"];
 
 function ToastPlayground() {
+  const [toasts, setToasts] = React.useState([{message: "Testy", selectedVariant: "notice"}]);
   const [message, setMessage] = React.useState("");
-  const [visible, setVisibility] = React.useState(false);
+  // const [visible, setVisibility] = React.useState(false);
   const [selectedVariant, setSelectedVariant] = React.useState("notice");
+
+  function addToast(message, selectedVariant) {
+    const newToast = {message, selectedVariant};
+    const newToastsList = [...toasts, newToast];
+    setToasts(newToastsList);
+  }
 
   return (
     <div className={styles.wrapper}>
@@ -19,9 +27,17 @@ function ToastPlayground() {
         <h1>Toast Playground</h1>
       </header>
 
-      {visible && <Toast message={message} variant={selectedVariant} setVisibility={setVisibility} />}
+      <ToastShelf toasts={toasts} setToasts={setToasts} />
 
-      <div className={styles.controlsWrapper}>
+      {/* {visible && <Toast message={message} variant={selectedVariant} setVisibility={setVisibility} />} */}
+
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          addToast(message, selectedVariant);
+        }}
+        className={styles.controlsWrapper}
+      >
         <div className={styles.row}>
           <label
             htmlFor="message"
@@ -60,29 +76,19 @@ function ToastPlayground() {
                 {variant}
               </label>
             ))}
-
-            {/* <label htmlFor="variant-notice">
-              <input
-                id="variant-notice"
-                type="radio"
-                name="variant"
-                value="notice"
-              />
-              notice
-            </label> */}
-         
           </div>
         </div>
 
-         <div className={styles.row}>
+        <div className={styles.row}>
           <div className={styles.label} />
           <div className={`${styles.inputWrapper} ${styles.radioWrapper}`}>
-            <Button onClick={() => {setVisibility(true)}}>Pop Toast!</Button>
+            <Button>Pop Toast!</Button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 }
+
 
 export default ToastPlayground;
