@@ -13,7 +13,6 @@ function ToastProvider({ children }) {
     const id = Math.random();
     const newToast = { message, selectedVariant, id };
     const newToastsList = [...toasts, newToast];
-    console.log(newToastsList);
     setToasts(newToastsList);
   }
   function dismissToast(id) {

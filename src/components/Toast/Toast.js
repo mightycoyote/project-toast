@@ -20,9 +20,8 @@ const ICONS_BY_VARIANT = {
   error: AlertOctagon,
 };
 
-function Toast( {id, message, variant}) {
-  const { dismissToast } =
-    React.useContext(ToastContext);
+function Toast({ id, message, variant }) {
+  const { dismissToast } = React.useContext(ToastContext);
   const Icon = ICONS_BY_VARIANT[variant];
   const classes = `${styles.toast} ${styles[variant]}`;
 
