@@ -26,19 +26,23 @@ function Toast({ id, message, variant }) {
   const classes = `${styles.toast} ${styles[variant]}`;
 
   return (
-    <div className={classes}>
+    <div className={classes} key={id}>
       <div className={styles.iconContainer}>
         <Icon size={24} />
       </div>
-      <p className={styles.content}>{message}</p>
+      <p className={styles.content}>
+        <VisuallyHidden>{variant}-</VisuallyHidden>
+        {message}
+      </p>
       <button
+        aria-label="Dismiss message"
+        aria-live="off"
         onClick={() => {
           dismissToast(id);
         }}
         className={styles.closeButton}
       >
         <X size={24} />
-        <VisuallyHidden>Dismiss message</VisuallyHidden>
       </button>
     </div>
   );
