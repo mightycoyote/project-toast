@@ -26,7 +26,7 @@ function Toast({ id, message, variant }) {
   const classes = `${styles.toast} ${styles[variant]}`;
 
   return (
-    <div className={classes} key={id}>
+    <div className={classes}>
       <div className={styles.iconContainer}>
         <Icon size={24} />
       </div>
